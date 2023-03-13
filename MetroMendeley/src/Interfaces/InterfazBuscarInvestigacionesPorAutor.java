@@ -166,7 +166,7 @@ public class InterfazBuscarInvestigacionesPorAutor extends javax.swing.JFrame {
     private void SeleccionarInvButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SeleccionarInvButtonActionPerformed
         // TODO add your handling code here:
         if (SeleccionTextArea.getText().equals("")) {
-            JOptionPane.showMessageDialog(null, "El campo esta vacio, porfavor escriba el nombre de la investigacion a seleccionar");
+            JOptionPane.showMessageDialog(null, "El campo esta vacio, porfavor escriba el nombre de la investigación a seleccionar");
         } else {
             String cadenaForPrint = "";
             String Nombre = SeleccionTextArea.getText();
