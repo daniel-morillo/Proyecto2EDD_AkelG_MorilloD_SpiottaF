@@ -4,13 +4,8 @@
  */
 package Interfaces;
 
-import Clases.Summary;
-import EstructurasDeDatos.Lista;
-import EstructurasDeDatos.Nodo;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import javax.swing.JFileChooser;
+import EstructurasDeDatos.HashTable;
+import java.io.PrintWriter;
 import javax.swing.JOptionPane;
 
 /**
@@ -19,87 +14,17 @@ import javax.swing.JOptionPane;
  */
 public class InterfazInicial extends javax.swing.JFrame {
     
-    private static Lista summaryList;
+    private static HashTable summaryHashTable;
+    private static HashTable autoresHashTable;
+    private static HashTable palabrasClaveHashTable;
     /**
      * Creates new form InterfazPrincipal
      */
-    public InterfazInicial() {
-        this.summaryList = new Lista();
+    public InterfazInicial(HashTable summaryHashTable, HashTable autoresHashTable, HashTable palabrasClaveHashTable) {
+        this.summaryHashTable = summaryHashTable;
+        this.autoresHashTable = autoresHashTable;
+        this.palabrasClaveHashTable = palabrasClaveHashTable;
         initComponents();
-    }
-        
-    /**
-     * Función que carga, lee y procesa el archivo txt que el usuario selecciono
-     * @return un String ya separado con todo el texto almacenado dentro del txt
-     */
-    public String leerArchivo(){
-        JFileChooser archivo = new JFileChooser();
-        archivo.showOpenDialog(archivo);
-        File file = archivo.getSelectedFile();
-        if (!file.toString().contains("txt")) {
-            JOptionPane.showMessageDialog(null, "EL ARCHIVO SELECCIONADO NO ES TXT");
-            return null;
-        } else {
-            String line;
-            String texto = "";
-
-            try { 
-                if (!file.exists()){
-                    file.createNewFile();
-                } else {               
-                    FileReader fr = new FileReader(file);
-                    BufferedReader br = new BufferedReader(fr);
-
-                    while((line = br.readLine()) != null){
-                        if (!line.isEmpty()) {
-                            texto += line + "\n";
-                        }    
-                    }
-
-                    if (!"".equals(texto)) {
-                        String [] textoSeparadoAutores = texto.split("Autores\n");
-                        String [] nombreArticuloArray = textoSeparadoAutores[0].split("\n");
-                        String nombreArticulo = nombreArticuloArray[0];
-                        String [] textoSeparadoResumen = textoSeparadoAutores[1].split("Resumen\n");
-                        String [] autoresArray = textoSeparadoResumen[0].split("\n");
-                        Lista autoresList = new Lista();
-                        for (int i = 0; i < autoresArray.length; i++) {
-                            autoresList.AppendAtTheEnd(autoresArray[i]);
-                        }
-                        String [] textoSeparadoKeyWords = textoSeparadoResumen[1].split(".\n");
-                        String cuerpoResumen = textoSeparadoKeyWords[0] + ".";
-                        String [] textoSeparadoDosPuntos = textoSeparadoKeyWords[1].split(": ");
-                        String [] keyWordsArray = textoSeparadoDosPuntos[1].split(", ");
-                        Lista keyWordsList = new Lista();
-                        for (int i = 0; i < keyWordsArray.length; i++) {
-                            keyWordsList.AppendAtTheEnd(keyWordsArray[i]);
-                        }
-
-                        Summary newSummary = new Summary(nombreArticulo, autoresList, cuerpoResumen, keyWordsList);
-                        
-                        boolean encontrado = false;
-                        if (!this.summaryList.isEmpty()) {
-                            Nodo<Summary> aux = this.summaryList.getpFirst();
-                            for (int i = 0; i < summaryList.getSize(); i++) {
-                                if (aux.getElemento().getTitulo().equalsIgnoreCase(nombreArticulo)) {
-                                    encontrado = true;
-                                }
-                                aux = aux.getpNext();
-                            }
-                        }
-                        if (encontrado == false) {
-                                this.summaryList.AppendAtTheEnd(newSummary);
-                                JOptionPane.showMessageDialog(null, "LECTURA COMPLETADA");
-                        } else {
-                            JOptionPane.showMessageDialog(null, "EL resumen ya esta registrado");
-                        }
-                    }
-                    br.close();
-                }
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "NO SELECCIONO NINGUN ARCHIVO O NO SE PUDO LEER PROPORCIONADO");
-            }  return texto;
-        }
     }
     
     /**
@@ -112,8 +37,8 @@ public class InterfazInicial extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        CargarArticulosButton = new javax.swing.JButton();
         IrMenuButton = new javax.swing.JButton();
+        BorrarSistemaButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -121,37 +46,44 @@ public class InterfazInicial extends javax.swing.JFrame {
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 170, -1, -1));
 
-        CargarArticulosButton.setText("CARGAR ARTICULOS");
-        CargarArticulosButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CargarArticulosButtonActionPerformed(evt);
-            }
-        });
-        getContentPane().add(CargarArticulosButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 230, -1, -1));
-
         IrMenuButton.setText("IR AL MENU");
         IrMenuButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 IrMenuButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(IrMenuButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 230, -1, -1));
+        getContentPane().add(IrMenuButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 310, -1, -1));
+
+        BorrarSistemaButton.setText("BORRAR SISTEMA PRE-GUARDADO");
+        BorrarSistemaButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BorrarSistemaButtonActionPerformed(evt);
+            }
+        });
+        getContentPane().add(BorrarSistemaButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 310, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void CargarArticulosButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CargarArticulosButtonActionPerformed
-        // TODO add your handling code here:
-        this.leerArchivo();
-    }//GEN-LAST:event_CargarArticulosButtonActionPerformed
-
     private void IrMenuButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IrMenuButtonActionPerformed
         // TODO add your handling code here:
-        InterfazMenu menu = new InterfazMenu(summaryList);
+        InterfazMenu menu = new InterfazMenu(summaryHashTable, autoresHashTable, palabrasClaveHashTable);
         this.setVisible(false);
-        menu.setVisible(true);
-                    
+        menu.setVisible(true);                
     }//GEN-LAST:event_IrMenuButtonActionPerformed
+
+    private void BorrarSistemaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BorrarSistemaButtonActionPerformed
+        // TODO add your handling code here:
+        this.summaryHashTable = new HashTable(23);
+        try {
+            PrintWriter pw = new PrintWriter("test//resumenes_guardados.txt");
+            pw.print("");
+            pw.close();
+            JOptionPane.showMessageDialog(this, "Sistema borrado exitosamente!");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al borrar los datos del sistema, porfavor intente de nuevo");
+        }
+    }//GEN-LAST:event_BorrarSistemaButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -184,13 +116,13 @@ public class InterfazInicial extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new InterfazInicial().setVisible(true);
+                new InterfazInicial(summaryHashTable, autoresHashTable, palabrasClaveHashTable).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton CargarArticulosButton;
+    private javax.swing.JButton BorrarSistemaButton;
     private javax.swing.JButton IrMenuButton;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
