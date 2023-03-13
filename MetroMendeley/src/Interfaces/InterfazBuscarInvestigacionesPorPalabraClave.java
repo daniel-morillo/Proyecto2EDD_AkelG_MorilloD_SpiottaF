@@ -174,7 +174,7 @@ public class InterfazBuscarInvestigacionesPorPalabraClave extends javax.swing.JF
                 Nombre += ".";
             }
             if (SelectWordTextArea.getText().equals("")) {
-                JOptionPane.showMessageDialog(null, "Porfavor ingrese en el campo de arriba a la izquierda, el nombre de la palabra clave de la investigacion que desea, para validar los detalles del resumen que se debe mostrar");
+                JOptionPane.showMessageDialog(null, "Porfavor ingrese en el campo de arriba a la izquierda, el nombre de la palabra clave de la investigación que desea, para validar los detalles del resumen que se debe mostrar");
             } else {
                 Lista listaInvestigacionesEncontradas = palabrasClaveHashTable.obtenerPalabraClave(SelectWordTextArea.getText());
                 Nodo<Summary> aux = listaInvestigacionesEncontradas.getpFirst();
