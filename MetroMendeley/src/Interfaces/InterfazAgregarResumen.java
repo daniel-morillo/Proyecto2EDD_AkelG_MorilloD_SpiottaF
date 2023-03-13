@@ -52,7 +52,7 @@ public class InterfazAgregarResumen extends javax.swing.JFrame {
         if (encontrado == false) {
             this.summaryHashTable.insertar(newSummary.getTitulo(), newSummary);
         } else {
-            JOptionPane.showMessageDialog(null, "EL resumen ya esta registrado");
+            JOptionPane.showMessageDialog(null, "EL resumen ya está registrado");
             cont ++;
         }
         return cont;
