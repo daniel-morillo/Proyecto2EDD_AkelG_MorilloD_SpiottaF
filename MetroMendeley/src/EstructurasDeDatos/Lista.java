@@ -4,6 +4,8 @@
  */
 package EstructurasDeDatos;
 
+import Clases.Summary;
+
 
 /**
  * Estra clase contiene las listas que serán de utilidad para todo el proyecto
@@ -83,6 +85,41 @@ public class Lista<T> {
                 }
                 aux = aux.getpNext();
             }  
+        }
+    }
+    
+    public void AppendOrdenadoStrings(T element) {
+        Nodo<Summary> pNew = new Nodo(element);
+        if (!isEmpty()) {
+            Nodo<Summary> aux = pFirst;
+            for (int i = 0; i < size; i++) {
+                if (aux.getElemento().getTitulo().compareToIgnoreCase(pNew.getElemento().getTitulo()) > 0) {
+                    pNew.setpNext(pFirst);
+                    pFirst = pNew;
+                    break;
+                }
+                else if (aux.getElemento().getTitulo().compareToIgnoreCase(pNew.getElemento().getTitulo()) < 0 &&  aux.getpNext() == null) {
+                    aux.setpNext(pNew);
+                    pLast = pNew; 
+                    break;
+                }
+                else if (aux.getElemento().getTitulo().compareToIgnoreCase(pNew.getElemento().getTitulo()) > 0 &&  aux.getpNext() == null) {
+                    pFirst = pNew;
+                    pNew.setpNext(aux);
+                    break;
+                }
+                else if (aux.getElemento().getTitulo().compareToIgnoreCase(pNew.getElemento().getTitulo()) < 0 && String.class.cast(Summary.class.cast(aux.getpNext().getElemento()).getTitulo()).compareToIgnoreCase(pNew.getElemento().getTitulo()) > 0) {
+                    pNew.setpNext(aux.getpNext());
+                    aux.setpNext(pNew);
+                    break;
+                }
+                aux = aux.getpNext();
+            }
+            size ++;
+        } else {
+        pFirst = pNew;
+        pLast = pNew;
+        size ++;
         }
     }
     
