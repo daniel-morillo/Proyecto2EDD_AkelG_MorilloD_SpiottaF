@@ -14,7 +14,7 @@ import java.io.FileReader;
 import javax.swing.JOptionPane;
 
 /**
- * Esta clase contiene el main que la da inicio a todo el proyecto
+ * Esta clase contiene el main que la da inicio a todo el proyecto, pre-cargando los resumenes guardados anteriormente en el programa
  * @author Fabrizio Spiotta, Georgina Akel, Daniel Morillo
  */
 public class Main {
