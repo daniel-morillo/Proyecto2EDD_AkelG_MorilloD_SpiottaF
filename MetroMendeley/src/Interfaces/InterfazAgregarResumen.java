@@ -163,7 +163,7 @@ public class InterfazAgregarResumen extends javax.swing.JFrame {
                     br.close();
                 }
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "NO SELECCIONO NINGUN ARCHIVO O NO SE PUDO LEER PROPORCIONADO");
+                JOptionPane.showMessageDialog(null, "NO SELECCIONO NINGÚN ARCHIVO O NO SE PUDO LEER PROPORCIONADO");
             }
         }
     }
